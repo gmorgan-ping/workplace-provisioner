@@ -2,14 +2,6 @@ version: "2.4"
 # The server profiles used in this example are intended for use with edge versions of the product image only.
 
 #-------------------------------------------------------------------------------------
-#- Ping Identity Simple Stack integrated demo
-#-
-#-     login  console            app                console           rest    ldaps
-#-     9031   9999               6443                 8443            1443    1636
-#-      |      |                  |                    |               |       |
-#-   +---------------+    +---------------+    +---------------+    +---------------+
-#-   | PingFederate  |    | PingDelegator |    |PingDataConsole|    | PingDirectory |
-#-   +---------------+    +---------------+    +---------------+    +---------------+
 #-
 #-  PingFederate Console                         PingDataConsole (PingDirectory)
 #-  --------------------                         -------------------------------
@@ -18,28 +10,17 @@ version: "2.4"
 #-    Password: 2FederateM0re                      Username: administrator
 #-                                                 Password: 2FederateM0re
 #-
-#-  PingDelegator App
-#-  -----------------
-#-  https://localhost:6443
-#-    Username: administrator
-#-    Password: 2FederateM0re
-#-
-#- NOTE: If you receive an error after pingdelegator login: 'You could not be authenticated'
-#-       some browsers (i.e. Firefox) may require you to accept cert on each port.
-#-       You should be able to goto https://localhost:1443 and accept the cert to continue.
 #-------------------------------------------------------------------------------------
 
 services:
   pingfederate:
-    image: ${PING_IDENTITY_DEVOPS_REGISTRY}/pingfederate:${PING_IDENTITY_DEVOPS_TAG}
+    image: pingidentity/pingfederate:edge
     command: wait-for pingdirectory:389 -t 900 -- entrypoint.sh start-server
     environment:
-      - SERVER_PROFILE_URL=https://github.com/pingidentity/pingidentity-server-profiles.git
-      - SERVER_PROFILE_PATH=baseline/pingfederate
+      - SERVER_PROFILE_URL=https://${GIT_USER}:${GIT_AT}@github.com/gmorgan-ping/workplace-provisioner.git
+      - SERVER_PROFILE_PATH=server-profiles/pingfederate
       - VERBOSE=false
     env_file:
-      # Configuration file created when setup.sh (Getting-started project root directory) is first run to source
-      # devops user/key details for evaluation licenses and for docker image/git tags
       - ${HOME}/.pingidentity/devops
     ports:
       - "9031:9031"
@@ -47,14 +28,13 @@ services:
     networks:
       - pingnet
     volumes:
-      - pingfederate-out:/opt/out
-    #  - ${HOME}/projects/devops/pingidentity-server-profiles/baseline/pingfederate:/opt/in
+      - ${HOME}/devops_out_vols/provisioning/pf_out:/opt/out
 
   pingdirectory:
-    image: ${PING_IDENTITY_DEVOPS_REGISTRY}/pingdirectory:${PING_IDENTITY_DEVOPS_TAG}
+    image: pingidentity/pingdirectory:edge
     environment:
-      - SERVER_PROFILE_URL=https://github.com/pingidentity/pingidentity-server-profiles.git
-      - SERVER_PROFILE_PATH=baseline/pingdirectory
+      - SERVER_PROFILE_URL=https://${GIT_USER}:${GIT_AT}@github.com/gmorgan-ping/workplace-provisioner.git
+      - SERVER_PROFILE_PATH=server-profiles/pingdirectory
     env_file:
       - ${HOME}/.pingidentity/devops
     ulimits:
@@ -72,31 +52,14 @@ services:
       - pingnet
     volumes:
       - pingdirectory-out:/opt/out
-    #  - ${HOME}/projects/devops/pingidentity-server-profiles/baseline/pingdirectory:/opt/in
 
   pingdataconsole:
-    image: ${PING_IDENTITY_DEVOPS_REGISTRY}/pingdataconsole:${PING_IDENTITY_DEVOPS_TAG}
+    image: pingidentity/pingdataconsole:edge
     ports:
       - "8443:8443"
-    networks:
-      - pingnet
-
-  pingdelegator:
-    image: ${PING_IDENTITY_DEVOPS_REGISTRY}/pingdelegator:${PING_IDENTITY_DEVOPS_TAG}
-    environment:
-      - PD_ENGINE_PUBLIC_PORT=1443
-      - SERVER_PROFILE_URL=https://github.com/pingidentity/pingidentity-server-profiles.git
-      - SERVER_PROFILE_PATH=baseline/pingdelegator
-    env_file:
-      - ${HOME}/.pingidentity/devops
-    ports:
-      - "6443:6443"
     networks:
       - pingnet
 
 networks:
     pingnet:
 
-volumes:
-  pingfederate-out:
-  pingdirectory-out:
