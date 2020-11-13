@@ -51,7 +51,7 @@ services:
     networks:
       - pingnet
     volumes:
-      - pingdirectory-out:/opt/out
+      - ${HOME}/devops_out_vols/provisioning/pd_out:/opt/out
 
   pingdataconsole:
     image: pingidentity/pingdataconsole:edge
