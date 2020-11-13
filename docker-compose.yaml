@@ -27,8 +27,8 @@ services:
       - "9999:9999"
     networks:
       - pingnet
-    #volumes:
-    #  - ${HOME}/devops_out_vols/provisioning/pf_out:/opt/out
+    volumes:
+      - ${HOME}/devops_out_vols/provisioning/pf_out:/opt/out
 
   pingdirectory:
     image: pingidentity/pingdirectory:edge
