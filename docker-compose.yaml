@@ -10,6 +10,15 @@ version: "2.4"
 #-    Password: 2FederateM0re                      Username: administrator
 #-                                                 Password: 2FederateM0re
 #-
+#-  PingDelegator App
+#-  -----------------
+#-  https://localhost:6443
+#-    Username: administrator
+#-    Password: 2FederateM0re
+#-
+#- NOTE: If you receive an error after pingdelegator login: 'You could not be authenticated'
+#-       some browsers (i.e. Firefox) may require you to accept cert on each port.
+#-       You should be able to goto https://localhost:1443 and accept the cert to continue.
 #-------------------------------------------------------------------------------------
 
 services:
@@ -17,7 +26,7 @@ services:
     image: pingidentity/pingfederate:edge
     command: wait-for pingdirectory:389 -t 900 -- entrypoint.sh start-server
     environment:
-      - SERVER_PROFILE_URL=https://${GIT_USER}:${GIT_AT}@github.com/gmorgan-ping/workplace-provisioner.git
+      - SERVER_PROFILE_URL=https://github.com/gmorgan-ping/workplace-provisioner.git
       - SERVER_PROFILE_PATH=server-profiles/pingfederate
       - VERBOSE=false
     env_file:
@@ -33,7 +42,7 @@ services:
   pingdirectory:
     image: pingidentity/pingdirectory:edge
     environment:
-      - SERVER_PROFILE_URL=https://${GIT_USER}:${GIT_AT}@github.com/gmorgan-ping/workplace-provisioner.git
+      - SERVER_PROFILE_URL=https://github.com/gmorgan-ping/workplace-provisioner.git
       - SERVER_PROFILE_PATH=server-profiles/pingdirectory
     env_file:
       - ${HOME}/.pingidentity/devops
@@ -50,13 +59,26 @@ services:
       - "1389:389"
     networks:
       - pingnet
-    volumes:
-      - ${HOME}/devops_out_vols/provisioning/pd_out:/opt/out
+#    volumes:
+#      - ${HOME}/devops_out_vols/provisioning/pd_out:/opt/out
 
   pingdataconsole:
     image: pingidentity/pingdataconsole:edge
     ports:
       - "8443:8443"
+    networks:
+      - pingnet
+
+  pingdelegator:
+    image: pingidentity/pingdelegator:${PING_IDENTITY_DEVOPS_TAG}
+    environment:
+      - PD_ENGINE_PUBLIC_PORT=1443
+      - SERVER_PROFILE_URL=https://github.com/pingidentity/pingidentity-server-profiles.git
+      - SERVER_PROFILE_PATH=baseline/pingdelegator
+    env_file:
+      - ${HOME}/.pingidentity/devops
+    ports:
+      - "6443:6443"
     networks:
       - pingnet
 
