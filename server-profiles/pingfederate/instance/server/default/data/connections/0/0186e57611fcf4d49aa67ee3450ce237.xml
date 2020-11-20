@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<md:EntityDescriptor entityID="https://www.facebook.com/company/COMPANY_ID" urn:name="COMPANY_SUBDOMAIN.workplace.com" ID="CV4ehCdtu7ABdZhL5Jx5BL2xWDa" urn:baseUrl="https://COMPANY_SUBDOMAIN.workplace.com" urn:LogLevel="STANDARD" urn:isActive="true" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" xmlns:urn="urn:sourceid.org:saml2:metadata-extension:v2">
+    <md:Extensions>
+        <urn:EntityExtension PFVersion="10.1.2.0" LicenseGroup="">
+            <urn:DigitialSignatureAliases/>
+            <urn:Encryption>
+                <urn:EncryptionPolicy EncryptionAlgorithm="http://www.w3.org/2001/04/xmlenc#aes128-cbc" KeyTransportAlgorithm="http://www.w3.org/2001/04/xmlenc#rsa-oaep-mgf1p" EncryptAssertion="false" EncryptSubjectNameID="false" SLOEncryptSubjectNameID="false"/>
+                <urn:DecryptionPolicy AssertionEncrypted="false" SubjectNameIDEncrypted="false" AttributeEncrypted="false" SLOSubjectNameIDEncrypted="false"/>
+            </urn:Encryption>
+            <urn:ConnectionTemplateProperties>
+                <urn:Property name="metadataFile" value="PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPG1kOkVudGl0eURlc2NyaXB0b3IgeG1sbnM6bWQ9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDptZXRhZGF0YSIKCWVudGl0eUlEPSJodHRwczovL3d3dy5mYWNlYm9vay5jb20vY29tcGFueS9DT01QQU5ZX0lEIiBjYWNoZUR1cmF0aW9uPSJQVDE0NDBNIgoJSUQ9Im5ZdEUzcHU4Zm9mTjRhNVpfU1Q1RjhqRE9iaCI+Cgk8bWQ6U1BTU09EZXNjcmlwdG9yIEF1dGhuUmVxdWVzdHNTaWduZWQ9ImZhbHNlIiBXYW50QXNzZXJ0aW9uc1NpZ25lZD0idHJ1ZSIgcHJvdG9jb2xTdXBwb3J0RW51bWVyYXRpb249InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpwcm90b2NvbCI+CiAgICAgIDxtZDpOYW1lSURGb3JtYXQ+dXJuOm9hc2lzOm5hbWVzOnRjOlNBTUw6MS4xOm5hbWVpZC1mb3JtYXQ6ZW1haWxBZGRyZXNzPC9tZDpOYW1lSURGb3JtYXQ+CgkJPG1kOkFzc2VydGlvbkNvbnN1bWVyU2VydmljZSBpc0RlZmF1bHQ9InRydWUiCgkJCUJpbmRpbmc9InVybjpvYXNpczpuYW1lczp0YzpTQU1MOjIuMDpiaW5kaW5nczpIVFRQLVBPU1QiCgkJCUxvY2F0aW9uPSJodHRwczovL0NPTVBBTllfU1VCRE9NQUlOLndvcmtwbGFjZS5jb20vd29yay9zYW1sLnBocCIKCQkJaW5kZXg9IjAiIC8+Cgk8L21kOlNQU1NPRGVzY3JpcHRvcj4KPC9tZDpFbnRpdHlEZXNjcmlwdG9yPg=="/>
+            </urn:ConnectionTemplateProperties>
+            <urn:MetadataUrlId xsi:nil="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+            <urn:enableAutoMetadataUpdate>false</urn:enableAutoMetadataUpdate>
+            <urn:AdditionalAllowedEntitiesConfiguration>
+                <urn:AllowAdditionalEntities>false</urn:AllowAdditionalEntities>
+                <urn:AllowAllEntities>false</urn:AllowAllEntities>
+                <urn:AdditionalAllowedEntities/>
+            </urn:AdditionalAllowedEntitiesConfiguration>
+        </urn:EntityExtension>
+    </md:Extensions>
+    <md:RoleDescriptor protocolSupportEnumeration="pingfederate:protocol:noop" xsi:type="urn:PFNoopRoleDescriptorType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+        <md:Extensions>
+            <urn:RoleExtension LastModified="2020-11-20T14:21:25.004Z"/>
+        </md:Extensions>
+    </md:RoleDescriptor>
+    <md:RoleDescriptor protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol" xsi:type="urn:PFAvailableCertsRoleDescriptorType" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"/>
+    <md:ContactPerson contactType="administrative"/>
+</md:EntityDescriptor>

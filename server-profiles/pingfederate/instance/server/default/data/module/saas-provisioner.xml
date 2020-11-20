@@ -1,1 +1,337 @@
-<saasProvisioner version="1.0" enableSaasProvisionerGUI="false" internalDataSourceId="ProvisionerDS" syncInterval="60" encryptDBSaasIdentities="true" xmlns="http://pingidentity.com/2008/06/saas-provisioner"/>
+<saasProvisioner version="1.0" enableSaasProvisionerGUI="true" internalDataSourceId="ProvisionerDS" syncInterval="5" encryptDBSaasIdentities="true" xmlns="http://pingidentity.com/2008/06/saas-provisioner">
+  <saasProvisionerEntity>
+    <entityId>https://www.facebook.com/company/COMPANY_ID</entityId>
+    <target id="WorkplaceByFacebook">
+      <parameter name="OAUTH_ACCESS_TOKEN" value="OBF:JWE:eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2Iiwia2lkIjoiUWVzOVR5eTV5WiIsInZlcnNpb24iOiIxMC4xLjIuMCJ9..5JLaCQtoZkw1m2GJ9o3YJg.XpKnF-L7Rmkw0PY_HcBPmI3aF_vDP74zVjBcjtlRXf9ZgpQXbMJzt1m4hexGWn6nAUqzDGugPWCjbCS16ecK-mPhVJKZDfo8YtZpEkxlAKquh9kbat1zoPpyfGjVWdUL7OrlKCVWEo-EJL-8gZQZdRuvGw7ZX3SKn0fze_jKw8S3ZbOmh39J1oEqwZ85UJ0zmblVHQgDROJ777I-DwTxUPLmunXRYOAQuAzf-IVRcfTkpoEYOMCBWy-aQvSDr19twUcf-j__PiUCtl3eHyW1DG_XO0IRpNXYKASRt21SN-Dp9JxLxdCI30xZtyCoL5evEMgfq1OCgipZ7f1Blu4UmGjlkjVeOfcR09IM16627UT4u1KR3ADMdQVt4MEaos6wOQyN-bGx0VwaqPIiy13SMQ.8C4r1UhliEMb8XZcGGYUJQ"/>
+      <parameter name="CLIENT_SECRET" value="OBF:JWE:eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2Iiwia2lkIjoiUWVzOVR5eTV5WiIsInZlcnNpb24iOiIxMC4xLjIuMCJ9..E7eG7_MTtd69h3lXjB3nMw.J4BmU-ljigmJ86rjWlhRYA.alhnnDFa7fY261tKlmFeBw"/>
+      <parameter name="SCIM_URL" value="https://www.facebook.com/scim/v1/"/>
+      <parameter name="Provisioning Options" value=""/>
+      <parameter name="createNewUsers" value="true"/>
+      <parameter name="updateNewUsers" value="true"/>
+      <parameter name="disableNewUsers" value="true"/>
+      <parameter name="PROVISION_DISABLED_USERS" value="true"/>
+      <parameter name="USERNAME_ATTRIBUTE_MAPPING" value="mail"/>
+    </target>
+    <channel id="1" name="autogen" active="true">
+      <maxThreads>1</maxThreads>
+      <timeout>60</timeout>
+      <source dataSourceId="LDAP-C7EE1ACA0980951DEC810F47D1AD2F6DB16DB3AB">
+        <ldapGuidFormatter guidAttributeName="entryUUID" guidIsBinary="false"/>
+        <usersBaseDN>ou=people,dc=example,dc=com</usersBaseDN>
+        <filter>mail=autogen.user.189@autogen.example.com</filter>
+        <memberOfGroupAttributeName/>
+        <groupMemberAttributeName>uniqueMember</groupMemberAttributeName>
+        <changedUsersAlgorithm>Timestamp No Negation</changedUsersAlgorithm>
+        <timestampAttributeName>modifyTimestamp</timestampAttributeName>
+        <userObjectClass>inetOrgPerson</userObjectClass>
+        <groupObjectClass>groupOfUniqueNames</groupObjectClass>
+        <directoryIdentityAttributesMapper statusReader="Flag">
+          <attributeName>nsaccountlock</attributeName>
+          <default>true</default>
+          <comparisonValue>true</comparisonValue>
+          <comparisonValueStatus>false</comparisonValueStatus>
+        </directoryIdentityAttributesMapper>
+        <userNestedSearch>false</userNestedSearch>
+        <groupNestedSearch>false</groupNestedSearch>
+      </source>
+      <saasUsernameFieldCode>userName</saasUsernameFieldCode>
+      <identityMappingField fieldName="userName">
+        <fieldInfo code="userName" label="userName">
+          <required>true</required>
+          <unique>true</unique>
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>uid</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="familyName">
+        <fieldInfo code="familyName" label="familyName">
+          <required>true</required>
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>sn</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="givenName">
+        <fieldInfo code="givenName" label="givenName">
+          <required>true</required>
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>givenName</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="addressType">
+        <fieldInfo code="addressType" label="addressType">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <default>work</default>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="city">
+        <fieldInfo code="city" label="city">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>l</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="costCenter">
+        <fieldInfo code="costCenter" label="costCenter">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="country">
+        <fieldInfo code="country" label="country">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="department">
+        <fieldInfo code="department" label="department">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="displayName">
+        <fieldInfo code="displayName" label="displayName">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="division">
+        <fieldInfo code="division" label="division">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="employeeNumber">
+        <fieldInfo code="employeeNumber" label="employeeNumber">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>employeeNumber</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="formattedName">
+        <fieldInfo code="formattedName" label="formattedName">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>cn</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="homePhone">
+        <fieldInfo code="homePhone" label="homePhone">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="honorificPrefix">
+        <fieldInfo code="honorificPrefix" label="honorificPrefix">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="honorificSuffix">
+        <fieldInfo code="honorificSuffix" label="honorificSuffix">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="imHandle1">
+        <fieldInfo code="imHandle1" label="imHandle1">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="imHandle2">
+        <fieldInfo code="imHandle2" label="imHandle2">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="imHandle3">
+        <fieldInfo code="imHandle3" label="imHandle3">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="imType1">
+        <fieldInfo code="imType1" label="imType1">
+          <option code="aim" label="aim"/>
+          <option code="gtalk" label="gtalk"/>
+          <option code="icq" label="icq"/>
+          <option code="xmpp" label="xmpp"/>
+          <option code="msn" label="msn"/>
+          <option code="skype" label="skype"/>
+          <option code="qq" label="qq"/>
+          <option code="yahoo}" label="yahoo}"/>
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="imType2">
+        <fieldInfo code="imType2" label="imType2">
+          <option code="aim" label="aim"/>
+          <option code="gtalk" label="gtalk"/>
+          <option code="icq" label="icq"/>
+          <option code="xmpp" label="xmpp"/>
+          <option code="msn" label="msn"/>
+          <option code="skype" label="skype"/>
+          <option code="qq" label="qq"/>
+          <option code="yahoo}" label="yahoo}"/>
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="imType3">
+        <fieldInfo code="imType3" label="imType3">
+          <option code="aim" label="aim"/>
+          <option code="gtalk" label="gtalk"/>
+          <option code="icq" label="icq"/>
+          <option code="xmpp" label="xmpp"/>
+          <option code="msn" label="msn"/>
+          <option code="skype" label="skype"/>
+          <option code="qq" label="qq"/>
+          <option code="yahoo}" label="yahoo}"/>
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="locale">
+        <fieldInfo code="locale" label="locale">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="manager">
+        <fieldInfo code="manager" label="manager">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>manager</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="middleName">
+        <fieldInfo code="middleName" label="middleName">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="mobilePhone">
+        <fieldInfo code="mobilePhone" label="mobilePhone">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>mobile</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="nickName">
+        <fieldInfo code="nickName" label="nickName">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="organization">
+        <fieldInfo code="organization" label="organization">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="postalCode">
+        <fieldInfo code="postalCode" label="postalCode">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>postalCode</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="preferredLanguage">
+        <fieldInfo code="preferredLanguage" label="preferredLanguage">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>preferredLanguage</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="profilePhotoUrl">
+        <fieldInfo code="profilePhotoUrl" label="profilePhotoUrl">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="profileUrl">
+        <fieldInfo code="profileUrl" label="profileUrl">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="roles">
+        <fieldInfo code="roles" label="roles">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="state">
+        <fieldInfo code="state" label="state">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>st</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="streetAddress">
+        <fieldInfo code="streetAddress" label="streetAddress">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>streetAddress</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="timeZone">
+        <fieldInfo code="timeZone" label="timeZone">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig/>
+      </identityMappingField>
+      <identityMappingField fieldName="title">
+        <fieldInfo code="title" label="title">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>title</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="userType">
+        <fieldInfo code="userType" label="userType">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>employeeType</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="workEmail">
+        <fieldInfo code="workEmail" label="workEmail">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>mail</attributes>
+        </fieldConfig>
+      </identityMappingField>
+      <identityMappingField fieldName="workPhone">
+        <fieldInfo code="workPhone" label="workPhone">
+          <attributeGroup>false</attributeGroup>
+        </fieldInfo>
+        <fieldConfig>
+          <attributes>telephoneNumber</attributes>
+        </fieldConfig>
+      </identityMappingField>
+    </channel>
+    <Scim/>
+  </saasProvisionerEntity>
+</saasProvisioner>
